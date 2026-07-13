@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ATAR Maxing — lock in now, flex in December</title>
 <meta name="description" content="The VCE study app: real app blocking during focus sessions, live ATAR estimates from your SACs, and leaderboards with your mates.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230B0B0E%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20font-size%3D%2238%22%20font-weight%3D%22800%22%20font-family%3D%22Arial%22%20fill%3D%22%238B6CFF%22%20text-anchor%3D%22middle%22%3EA%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,Bl
 /* nav */
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap}
 .brand{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.4px;color:var(--text);text-decoration:none}
-.brand-a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#B39CFF,#8B6CFF 55%,#5AA8FF);color:#0B0B0E;font-weight:900;font-size:17px}
+.brand-logo{width:30px;height:32px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(139,108,255,.45))}
 .nav-links{display:flex;gap:26px}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500}
 .nav-links a:hover,.nav-links a.on{color:var(--text)}
@@ -162,7 +162,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
 <div class="wrap">
 
 <nav class="nav">
-  <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
+  <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> ATAR Maxing</a>
   <div class="nav-links">
     <a href="./#features">Features</a>
     <a href="./#support">Support</a>
@@ -341,7 +341,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
-      <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
+      <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> ATAR Maxing</a>
       <p>The study-life balance app for VCE students. Built in Melbourne by students who get it.</p>
       
 <a class="asbadge " href="#" aria-label="Download on the App Store (coming soon)">

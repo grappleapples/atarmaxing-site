@@ -51,9 +51,7 @@ function bodyHtml(body) {
 }
 
 /* ── shared bits ────────────────────────────────────────────────────── */
-const favicon = 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0B0B0E"/><text x="32" y="45" font-size="38" font-weight="800" font-family="Arial" fill="#8B6CFF" text-anchor="middle">A</text></svg>`
-);
+const favicon = 'favicon.png';   // arrows-A, exported from the app splash asset
 
 // Official-style App Store badge (inline SVG, no external assets).
 // App isn't live yet → href="#" + .soon caption; swap href when it ships.
@@ -65,7 +63,7 @@ const appStoreBadge = (cls = '') => `
 
 const nav = (active) => `
 <nav class="nav">
-  <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
+  <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> ATAR Maxing</a>
   <div class="nav-links">
     <a href="./#features"${active === 'home' ? '' : ''}>Features</a>
     <a href="./#support">Support</a>
@@ -79,7 +77,7 @@ const footer = `
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
-      <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
+      <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> ATAR Maxing</a>
       <p>The study-life balance app for VCE students. Built in Melbourne by students who get it.</p>
       ${appStoreBadge()}
       <p class="soon">Coming soon to the App Store</p>
@@ -118,7 +116,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,Bl
 /* nav */
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;flex-wrap:wrap}
 .brand{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.4px;color:var(--text);text-decoration:none}
-.brand-a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#B39CFF,#8B6CFF 55%,#5AA8FF);color:#0B0B0E;font-weight:900;font-size:17px}
+.brand-logo{width:30px;height:32px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(139,108,255,.45))}
 .nav-links{display:flex;gap:26px}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500}
 .nav-links a:hover,.nav-links a.on{color:var(--text)}
