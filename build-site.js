@@ -334,6 +334,27 @@ const phoneSocial = `
   </div>
 </div></div>`;
 
+const phoneAtar = `
+<div class="phone"><div class="screen">
+  <div class="island"></div>
+  <div class="m-row"><div class="m-hi">ATAR tracker</div><div class="m-chip" style="background:rgba(139,108,255,.12);border-color:rgba(139,108,255,.4);color:var(--violet2)">Goal 90.00</div></div>
+  <div class="m-card" style="text-align:center">
+    <div class="m-label">Predicted ATAR</div>
+    <div style="font-size:40px;font-weight:800;letter-spacing:-1.5px;margin:6px 0 2px" class="grad">88.45</div>
+    <div class="m-sub" style="color:var(--green)">▲ 1.20 since last SAC</div>
+  </div>
+  <div class="m-card">
+    <div class="m-label">Subjects</div>
+    <div class="m-task"><span class="m-dot" style="background:var(--violet)"></span><span style="flex:1">Methods</span><b style="font-size:11.5px">needs 41</b></div>
+    <div class="m-bar"><i style="width:82%;background:var(--violet)"></i></div>
+    <div class="m-task" style="margin-top:6px"><span class="m-dot" style="background:var(--blue)"></span><span style="flex:1">English</span><b style="font-size:11.5px">needs 37</b></div>
+    <div class="m-bar"><i style="width:74%;background:var(--blue)"></i></div>
+    <div class="m-task" style="margin-top:6px"><span class="m-dot" style="background:var(--green)"></span><span style="flex:1">Chemistry</span><b style="font-size:11.5px">needs 35</b></div>
+    <div class="m-bar"><i style="width:70%;background:var(--green)"></i></div>
+  </div>
+  <div class="m-lock" style="margin-top:16px">📅 Methods SAC in 6 days — plan ready</div>
+</div></div>`;
+
 /* ── homepage ───────────────────────────────────────────────────────── */
 const indexBody = `
 <header class="hero">
@@ -378,7 +399,7 @@ const indexBody = `
       <span>📅 <b>Study plans</b> generated before every SAC</span>
     </div>
   </div>
-  <div class="f-art">${phoneSocial}</div>
+  <div class="f-art">${phoneAtar}</div>
 </div>
 
 <div class="feature rv">
@@ -392,7 +413,7 @@ const indexBody = `
       <span>⚖️ <b>Daily balance check-ins</b> so you don't burn out</span>
     </div>
   </div>
-  <div class="f-art">${phoneHome.replace('hero-phone', '')}</div>
+  <div class="f-art">${phoneSocial}</div>
 </div>
 
 <section class="center rv">
