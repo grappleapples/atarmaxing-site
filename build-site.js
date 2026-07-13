@@ -407,8 +407,8 @@ const indexBody = `
 
 <section class="rv">
   <div class="cta-band">
-    <div class="kicker">Locked In</div>
-    <h2>Try Locked In free<br>for 1 week</h2>
+    <div class="kicker">The premium plan</div>
+    <h2>Lock in free<br>for 1 week.</h2>
     <p>Unlock unlimited SAC tracking, momentum insights and the full balance history. Cancel anytime — you keep the rest of your trial.</p>
     ${appStoreBadge()}
     <p class="fine">A$8.99/month or A$64.99/year after the trial · new subscribers only · billed through Apple · <a href="terms">terms apply</a></p>
