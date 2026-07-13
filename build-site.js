@@ -1,15 +1,113 @@
-<!doctype html>
-<html lang="en-AU">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ATAR Maxing — lock in now, flex in December</title>
-<meta name="description" content="The VCE study app: real app blocking during focus sessions, live ATAR estimates from your SACs, and leaderboards with your mates.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230B0B0E%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20font-size%3D%2238%22%20font-weight%3D%22800%22%20font-family%3D%22Arial%22%20fill%3D%22%238B6CFF%22%20text-anchor%3D%22middle%22%3EA%3C%2Ftext%3E%3C%2Fsvg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
+// atarmaxing.com generator — builds index/privacy/terms from the app's legal
+// text (../atar-maxing/app/privacy.tsx + terms.tsx) so web and app stay
+// word-for-word identical. Run: node build-site.js  (then commit + push)
+const fs = require('fs');
+const path = require('path');
+
+const APP = path.join(__dirname, '..', 'atar-maxing');
+const OUT = __dirname;
+
+/* ── extract legal sections from the app source ─────────────────────── */
+function extractArray(file, arrayName, consts) {
+  const src = fs.readFileSync(file, 'utf8');
+  const start = src.indexOf(`export const ${arrayName} = [`);
+  if (start === -1) throw new Error(`${arrayName} not found in ${file}`);
+  const open = src.indexOf('[', start);
+  const end = src.indexOf('\n];', open);
+  const literal = src.slice(open, end + 2);
+  const decls = Object.entries(consts).map(([k, v]) => `const ${k} = ${JSON.stringify(v)};`).join('\n');
+  return eval(`${decls}\n(${literal})`);
+}
+function grab(file, re) {
+  const m = fs.readFileSync(file, 'utf8').match(re);
+  if (!m) throw new Error(`pattern ${re} not found in ${file}`);
+  return m[1];
+}
+
+const P = path.join(APP, 'app/privacy.tsx');
+const T = path.join(APP, 'app/terms.tsx');
+const APP_NAME = 'ATAR Maxing', COMPANY = 'ATAR Maxing', ABN = '98 510 784 300';
+const CONTACT_EMAIL = 'support@atarmaxing.com';
+const PRIVACY_URL = 'https://atarmaxing.com/privacy';
+const privacyUpdated = grab(P, /LAST_UPDATED = '([^']+)'/);
+const termsUpdated = grab(T, /TERMS_LAST_UPDATED = '([^']+)'/);
+const privacySections = extractArray(P, 'PRIVACY_SECTIONS', { APP_NAME, COMPANY, ABN, CONTACT_EMAIL, PRIVACY_URL });
+const termsSections = extractArray(T, 'TERMS_SECTIONS', { APP_NAME, COMPANY, ABN, SUPPORT: CONTACT_EMAIL });
+
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function bodyHtml(body) {
+  return body.split('\n\n').map((block) => {
+    const lines = block.split('\n');
+    let html = '', bullets = [];
+    const flush = () => { if (bullets.length) { html += `<ul>${bullets.map((b) => `<li>${b}</li>`).join('')}</ul>`; bullets = []; } };
+    for (const line of lines) {
+      if (line.startsWith('• ')) bullets.push(esc(line.slice(2)));
+      else { flush(); html += html.endsWith('</ul>') || html === '' ? `<p>${esc(line)}` : `<br>${esc(line)}`; }
+    }
+    flush();
+    if (html && !html.endsWith('</ul>')) html += '</p>';
+    return html.replace(/<p>(.*?)(<ul>)/g, '<p>$1</p>$2');
+  }).join('\n');
+}
+
+/* ── shared bits ────────────────────────────────────────────────────── */
+const favicon = 'data:image/svg+xml,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0B0B0E"/><text x="32" y="45" font-size="38" font-weight="800" font-family="Arial" fill="#8B6CFF" text-anchor="middle">A</text></svg>`
+);
+
+// Official-style App Store badge (inline SVG, no external assets).
+// App isn't live yet → href="#" + .soon caption; swap href when it ships.
+const appStoreBadge = (cls = '') => `
+<a class="asbadge ${cls}" href="#" aria-label="Download on the App Store (coming soon)">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
+  <span><small>Download on the</small><strong>App Store</strong></span>
+</a>`;
+
+const nav = (active) => `
+<nav class="nav">
+  <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
+  <div class="nav-links">
+    <a href="./#features"${active === 'home' ? '' : ''}>Features</a>
+    <a href="./#support">Support</a>
+    <a href="privacy"${active === 'privacy' ? ' class="on"' : ''}>Privacy</a>
+    <a href="terms"${active === 'terms' ? ' class="on"' : ''}>Terms</a>
+  </div>
+  ${appStoreBadge('asbadge-sm')}
+</nav>`;
+
+const footer = `
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
+      <p>The study-life balance app for VCE students. Built in Melbourne by students who get it.</p>
+      ${appStoreBadge()}
+      <p class="soon">Coming soon to the App Store</p>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <a href="privacy">Privacy Policy</a>
+      <a href="terms">Terms of Use</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
+      <span>ABN ${ABN}</span>
+      <span>Melbourne, Australia</span>
+    </div>
+    <div class="foot-col">
+      <h4>Follow</h4>
+      <a href="https://tiktok.com/@atarmaxing" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://instagram.com/atarmaxing" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://x.com/atarmaxing" target="_blank" rel="noopener">X</a>
+      <a href="https://linkedin.com/company/atarmaxing" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+  <p class="foot-copy">© ${new Date().getFullYear()} ${COMPANY}. All rights reserved. Not affiliated with VCAA or VTAC.</p>
+</footer>`;
+
+/* ── stylesheet ─────────────────────────────────────────────────────── */
+const CSS = `
 :root{--bg:#08080C;--bg2:#0B0B0E;--surface:#131318;--card:#15151C;--border:rgba(255,255,255,.08);--text:#F2F2F7;--muted:#9C9CAB;--dim:#66666F;--violet:#8B6CFF;--violet2:#B39CFF;--blue:#5AA8FF;--green:#2DD4A0;--gold:#FFB84D;--pink:#FF6CB4}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -155,40 +253,43 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
 .lsec ul{padding-left:22px}
 .lsec li{margin-bottom:4px}
 .lsec a,a{color:var(--violet2)}
-</style>
+`;
+
+const REVEAL_JS = `
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>`;
+
+function page(title, desc, body, active) {
+  return `<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<link rel="icon" href="${favicon}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>${CSS}</style>
 </head>
 <body>
 <div class="bgfx"></div>
 <div class="wrap">
+${nav(active)}
+${body}
+${footer}
+</div>
+${REVEAL_JS}
+</body>
+</html>`;
+}
 
-<nav class="nav">
-  <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
-  <div class="nav-links">
-    <a href="./#features">Features</a>
-    <a href="./#support">Support</a>
-    <a href="privacy">Privacy</a>
-    <a href="terms">Terms</a>
-  </div>
-  
-<a class="asbadge asbadge-sm" href="#" aria-label="Download on the App Store (coming soon)">
-  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
-  <span><small>Download on the</small><strong>App Store</strong></span>
-</a>
-</nav>
-
-<header class="hero">
-  <div class="hero-copy">
-    <div class="pill"><span class="dot"></span> Built for VCE · Class of 2026</div>
-    <h1>Lock in now.<br><span class="grad">Flex in December.</span></h1>
-    <p class="lead">ATAR Maxing blocks your distracting apps while you study, tracks every SAC toward a live ATAR estimate, and keeps you accountable with your mates — without giving up your life.</p>
-    <div class="hero-ctas">
-<a class="asbadge " href="#" aria-label="Download on the App Store (coming soon)">
-  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
-  <span><small>Download on the</small><strong>App Store</strong></span>
-</a></div>
-    <p class="soon">Coming soon to the App Store · free to start</p>
-  </div>
-  <div class="f-art">
+/* ── phone mock screens (swap for real screenshots later: replace the
+      .screen contents with <img src="shots/xxx.png" style="width:100%"> ) ── */
+const phoneHome = `
 <div class="phone hero-phone"><div class="screen">
   <div class="island"></div>
   <div class="m-row"><div><div class="m-hi">Afternoon, Marcus 👋</div><div class="m-sub">Thursday 12 March</div></div><div class="m-chip">🔥 14</div></div>
@@ -203,7 +304,49 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
     <div class="m-task"><span class="m-dot" style="background:var(--blue)"></span>English essay plan · 5:30pm</div>
     <div class="m-task"><span class="m-dot" style="background:var(--green)"></span>Gym · 7:00pm</div>
   </div>
-</div></div></div>
+</div></div>`;
+
+const phoneFocus = `
+<div class="phone"><div class="screen">
+  <div class="island"></div>
+  <div style="text-align:center;margin-top:26px"><div class="m-label">Focus session</div></div>
+  <div class="m-ring" style="width:180px;height:180px;background:conic-gradient(var(--gold) 0 62%,rgba(255,255,255,.07) 62% 100%);margin-top:22px"><div class="inner"><div class="m-timer">31:07</div><small>of 50:00</small></div></div>
+  <div class="m-lock">🔒 Apps blocked — full focus</div>
+  <div class="m-quote">"Your competition just kept studying."</div>
+  <div class="m-card" style="margin-top:26px">
+    <div class="m-row"><span class="m-sub">Break budget</span><span class="m-sub">5m left</span></div>
+    <div class="m-bar"><i style="width:33%;background:var(--gold)"></i></div>
+  </div>
+</div></div>`;
+
+const phoneSocial = `
+<div class="phone"><div class="screen">
+  <div class="island"></div>
+  <div class="m-row"><div class="m-hi">The Boys 📚</div><div class="m-chip" style="background:rgba(139,108,255,.12);border-color:rgba(139,108,255,.4);color:var(--violet2)">K7X2FQ</div></div>
+  <div class="m-card">
+    <div class="m-lb"><span class="m-medal">🥇</span><span class="m-av" style="background:#FFD25E">J</span><span class="nm">Jake</span><span class="pts">3,420 pts</span></div>
+    <div class="m-lb"><span class="m-medal">🥈</span><span class="m-av" style="background:#C7CCD6">M</span><span class="nm" style="color:var(--violet2)">You</span><span class="pts">3,180 pts</span></div>
+    <div class="m-lb"><span class="m-medal">🥉</span><span class="m-av" style="background:#D08A4E">P</span><span class="nm">Priya</span><span class="pts">2,940 pts</span></div>
+    <div class="m-lb"><span class="m-medal" style="color:var(--dim);font-size:11px">#4</span><span class="m-av" style="background:#5AA8FF">T</span><span class="nm">Tom</span><span class="pts">2,600 pts</span></div>
+  </div>
+  <div class="m-card">
+    <div class="m-label">This week</div>
+    <div class="m-row" style="margin-top:8px"><span class="m-sub">Focus time</span><span class="m-sub" style="color:var(--text);font-weight:700">11h 20m</span></div>
+    <div class="m-bar"><i style="width:76%;background:linear-gradient(90deg,var(--violet),var(--blue))"></i></div>
+  </div>
+</div></div>`;
+
+/* ── homepage ───────────────────────────────────────────────────────── */
+const indexBody = `
+<header class="hero">
+  <div class="hero-copy">
+    <div class="pill"><span class="dot"></span> Built for VCE · Class of 2026</div>
+    <h1>Lock in now.<br><span class="grad">Flex in December.</span></h1>
+    <p class="lead">ATAR Maxing blocks your distracting apps while you study, tracks every SAC toward a live ATAR estimate, and keeps you accountable with your mates — without giving up your life.</p>
+    <div class="hero-ctas">${appStoreBadge()}</div>
+    <p class="soon">Coming soon to the App Store · free to start</p>
+  </div>
+  <div class="f-art">${phoneHome}</div>
 </header>
 
 <section id="features" class="center rv">
@@ -223,18 +366,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
       <span>💪 <b>Mid-session nudges</b> when you need them</span>
     </div>
   </div>
-  <div class="f-art">
-<div class="phone"><div class="screen">
-  <div class="island"></div>
-  <div style="text-align:center;margin-top:26px"><div class="m-label">Focus session</div></div>
-  <div class="m-ring" style="width:180px;height:180px;background:conic-gradient(var(--gold) 0 62%,rgba(255,255,255,.07) 62% 100%);margin-top:22px"><div class="inner"><div class="m-timer">31:07</div><small>of 50:00</small></div></div>
-  <div class="m-lock">🔒 Apps blocked — full focus</div>
-  <div class="m-quote">"Your competition just kept studying."</div>
-  <div class="m-card" style="margin-top:26px">
-    <div class="m-row"><span class="m-sub">Break budget</span><span class="m-sub">5m left</span></div>
-    <div class="m-bar"><i style="width:33%;background:var(--gold)"></i></div>
-  </div>
-</div></div></div>
+  <div class="f-art">${phoneFocus}</div>
 </div>
 
 <div class="feature flip rv">
@@ -248,22 +380,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
       <span>📅 <b>Study plans</b> generated before every SAC</span>
     </div>
   </div>
-  <div class="f-art">
-<div class="phone"><div class="screen">
-  <div class="island"></div>
-  <div class="m-row"><div class="m-hi">The Boys 📚</div><div class="m-chip" style="background:rgba(139,108,255,.12);border-color:rgba(139,108,255,.4);color:var(--violet2)">K7X2FQ</div></div>
-  <div class="m-card">
-    <div class="m-lb"><span class="m-medal">🥇</span><span class="m-av" style="background:#FFD25E">J</span><span class="nm">Jake</span><span class="pts">3,420 pts</span></div>
-    <div class="m-lb"><span class="m-medal">🥈</span><span class="m-av" style="background:#C7CCD6">M</span><span class="nm" style="color:var(--violet2)">You</span><span class="pts">3,180 pts</span></div>
-    <div class="m-lb"><span class="m-medal">🥉</span><span class="m-av" style="background:#D08A4E">P</span><span class="nm">Priya</span><span class="pts">2,940 pts</span></div>
-    <div class="m-lb"><span class="m-medal" style="color:var(--dim);font-size:11px">#4</span><span class="m-av" style="background:#5AA8FF">T</span><span class="nm">Tom</span><span class="pts">2,600 pts</span></div>
-  </div>
-  <div class="m-card">
-    <div class="m-label">This week</div>
-    <div class="m-row" style="margin-top:8px"><span class="m-sub">Focus time</span><span class="m-sub" style="color:var(--text);font-weight:700">11h 20m</span></div>
-    <div class="m-bar"><i style="width:76%;background:linear-gradient(90deg,var(--violet),var(--blue))"></i></div>
-  </div>
-</div></div></div>
+  <div class="f-art">${phoneSocial}</div>
 </div>
 
 <div class="feature rv">
@@ -277,22 +394,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
       <span>⚖️ <b>Daily balance check-ins</b> so you don't burn out</span>
     </div>
   </div>
-  <div class="f-art">
-<div class="phone "><div class="screen">
-  <div class="island"></div>
-  <div class="m-row"><div><div class="m-hi">Afternoon, Marcus 👋</div><div class="m-sub">Thursday 12 March</div></div><div class="m-chip">🔥 14</div></div>
-  <div class="m-card">
-    <div class="m-label">Predicted ATAR</div>
-    <div class="m-ring"><div class="inner"><b>88.45</b><small>target 90</small></div></div>
-    <div class="m-row"><span class="m-sub">Methods · on track</span><span class="m-sub" style="color:var(--green)">▲ 1.20</span></div>
-  </div>
-  <div class="m-card">
-    <div class="m-label">Today</div>
-    <div class="m-task"><span class="m-dot" style="background:var(--violet)"></span>Methods SAC revision · 4:00pm</div>
-    <div class="m-task"><span class="m-dot" style="background:var(--blue)"></span>English essay plan · 5:30pm</div>
-    <div class="m-task"><span class="m-dot" style="background:var(--green)"></span>Gym · 7:00pm</div>
-  </div>
-</div></div></div>
+  <div class="f-art">${phoneHome.replace('hero-phone', '')}</div>
 </div>
 
 <section class="center rv">
@@ -310,11 +412,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
     <div class="kicker">Locked In</div>
     <h2>Try Locked In free<br>for 1 week</h2>
     <p>Unlock unlimited SAC tracking, momentum insights and the full balance history. Cancel anytime — you keep the rest of your trial.</p>
-    
-<a class="asbadge " href="#" aria-label="Download on the App Store (coming soon)">
-  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
-  <span><small>Download on the</small><strong>App Store</strong></span>
-</a>
+    ${appStoreBadge()}
     <p class="fine">A$8.99/month or A$64.99/year after the trial · new subscribers only · billed through Apple · <a href="terms">terms apply</a></p>
   </div>
 </section>
@@ -326,7 +424,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
     <div class="support-card">
       <h3>📬 Email us</h3>
       <p>Bugs, feedback, account help, or feature ideas — straight to the two of us who built it.</p>
-      <a class="mail" href="mailto:support@atarmaxing.com">support@atarmaxing.com</a>
+      <a class="mail" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
     </div>
     <div class="support-card">
       <h3>Quick answers</h3>
@@ -336,46 +434,33 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
       <details><summary>Can I delete my account?</summary><p>Anytime, in the app: Settings → Delete account. It permanently removes your account and data from our servers.</p></details>
     </div>
   </div>
-</section>
+</section>`;
 
-<footer>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <a class="brand" href="./"><span class="brand-a">A</span> ATAR Maxing</a>
-      <p>The study-life balance app for VCE students. Built in Melbourne by students who get it.</p>
-      
-<a class="asbadge " href="#" aria-label="Download on the App Store (coming soon)">
-  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
-  <span><small>Download on the</small><strong>App Store</strong></span>
-</a>
-      <p class="soon">Coming soon to the App Store</p>
-    </div>
-    <div class="foot-col">
-      <h4>Legal</h4>
-      <a href="privacy">Privacy Policy</a>
-      <a href="terms">Terms of Use</a>
-    </div>
-    <div class="foot-col">
-      <h4>Company</h4>
-      <a href="mailto:support@atarmaxing.com">support@atarmaxing.com</a>
-      <span>ABN 98 510 784 300</span>
-      <span>Melbourne, Australia</span>
-    </div>
-    <div class="foot-col">
-      <h4>Follow</h4>
-      <a href="https://tiktok.com/@atarmaxing" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://instagram.com/atarmaxing" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://x.com/atarmaxing" target="_blank" rel="noopener">X</a>
-      <a href="https://linkedin.com/company/atarmaxing" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
-  </div>
-  <p class="foot-copy">© 2026 ATAR Maxing. All rights reserved. Not affiliated with VCAA or VTAC.</p>
-</footer>
-</div>
+/* ── legal page body ────────────────────────────────────────────────── */
+function legalPage(h1, updated, intro, sections) {
+  const secs = sections.map((s, i) =>
+    `<div class="lsec"><h2><span class="num">${i + 1}</span>${esc(s.title)}</h2>${bodyHtml(s.body)}</div>`).join('\n');
+  return `<div class="legal">
+<h1>${h1}</h1>
+<p class="updated">Last updated: ${updated}</p>
+<div class="intro">${intro}</div>
+${secs}
+</div>`;
+}
 
-<script>
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-</script>
-</body>
-</html>
+/* ── write files ────────────────────────────────────────────────────── */
+fs.writeFileSync(path.join(OUT, 'index.html'),
+  page('ATAR Maxing — lock in now, flex in December', 'The VCE study app: real app blocking during focus sessions, live ATAR estimates from your SACs, and leaderboards with your mates.', indexBody, 'home'));
+fs.writeFileSync(path.join(OUT, 'privacy.html'),
+  page('Privacy Policy — ATAR Maxing', 'How ATAR Maxing collects, uses and protects your data.',
+    legalPage('Privacy Policy', privacyUpdated,
+      `We built ${APP_NAME} to help VCE students hit their goals. Your privacy matters — here's exactly how we handle your data, in plain English. Governed by the Australian Privacy Act 1988 (Cth).`,
+      privacySections), 'privacy'));
+fs.writeFileSync(path.join(OUT, 'terms.html'),
+  page('Terms of Use — ATAR Maxing', 'The terms that govern your use of the ATAR Maxing app.',
+    legalPage('Terms of Use', termsUpdated,
+      `The rules of using ${APP_NAME} — including subscriptions, referral codes and what our ATAR estimates do (and don't) promise. Our <a href="privacy">Privacy Policy</a> covers how we handle your data.`,
+      termsSections), 'terms'));
+
+console.log('privacy sections:', privacySections.length, '| terms:', termsSections.length);
+console.log('written: index.html privacy.html terms.html');
