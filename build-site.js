@@ -95,10 +95,8 @@ const footer = `
     </div>
     <div class="foot-col">
       <h4>Follow</h4>
-      <a href="https://tiktok.com/@atarmaxing" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://instagram.com/atarmaxing" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://x.com/atarmaxing" target="_blank" rel="noopener">X</a>
-      <a href="https://linkedin.com/company/atarmaxing" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://tiktok.com/@atarmaxing.app" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://instagram.com/atarmaxing.app" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
   <p class="foot-copy">© ${new Date().getFullYear()} ${COMPANY}. All rights reserved. Not affiliated with VCAA or VTAC.</p>
@@ -447,9 +445,15 @@ const indexBody = `
     </div>
     <div class="support-card">
       <h3>Quick answers</h3>
+      <details><summary>How does app blocking work?</summary><p>You pick the apps, start a focus session, and iOS blocks them until the timer ends (or a budgeted break). It's built on Apple's Screen Time technology — we never see what apps you have installed.</p></details>
+      <details><summary>How is my predicted ATAR calculated?</summary><p>You enter your SAC scores and targets per subject; the app estimates your study scores, applies scaling, and converts your aggregate the same way VTAC does. It's a motivational estimate — not an official result, and we're not affiliated with VCAA or VTAC.</p></details>
+      <details><summary>How do points and leaderboards work?</summary><p>Points come from real work: focus sessions of 30 minutes or more with app blocking on (and breaks within limits), daily journals, tasks and reflections. Compete with friends, your school, or the global top 15 — leaderboards only ever show names and points, never marks.</p></details>
+      <details><summary>Do breaks stop my study timer?</summary><p>Yes — taking a break pauses the study countdown and starts a separate break timer while your apps unlock. When it runs out, apps re-lock and the study timer picks up exactly where it left off.</p></details>
+      <details><summary>What does Locked In (premium) include?</summary><p>App blocking during focus sessions, unlimited SAC tracking per subject, appearance themes, full balance history and more. It's A$8.99/month with a 1-week free trial on monthly, or A$64.99/year.</p></details>
       <details><summary>Is my study data private?</summary><p>Yes. Your scores, journal and academic data are never visible to other users — friends only ever see your name, username and points. Full details in our <a href="privacy">Privacy Policy</a>.</p></details>
+      <details><summary>What year levels is it for?</summary><p>VCE Year 11 and 12 — including Year 11s doing an accelerated 3/4 subject. Year 11s get their own setup so predictions still make sense.</p></details>
+      <details><summary>Is there an Android version?</summary><p>iOS only for now — app blocking is built on Apple's Screen Time, which has no Android equivalent. If enough people ask, an Android version (without blocking) is on the cards.</p></details>
       <details><summary>How do I cancel Locked In?</summary><p>Subscriptions are managed by Apple: iOS Settings → your name → Subscriptions → ATAR Maxing. Cancelling keeps your access until the end of the period.</p></details>
-      <details><summary>How does app blocking work?</summary><p>You pick the apps, start a focus session, and iOS blocks them until the timer ends (or a budgeted break). We never see what apps you have installed.</p></details>
       <details><summary>Can I delete my account?</summary><p>Anytime, in the app: Settings → Delete account. It permanently removes your account and data from our servers.</p></details>
     </div>
   </div>
