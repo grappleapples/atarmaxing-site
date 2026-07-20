@@ -115,8 +115,12 @@ h2{font-size:clamp(28px,4.4vw,44px);letter-spacing:-1.5px;line-height:1.1;font-w
 .cta-band .fine{font-size:11.5px;color:var(--dim);margin-top:16px}
 
 /* support */
-.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px}
-@media(max-width:720px){.support-grid{grid-template-columns:1fr}}
+.support-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:36px}
+.faq-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.22,.61,.36,1)}
+.faq-more>div{overflow:hidden}
+.faq-more.open{grid-template-rows:1fr}
+.faq-toggle{margin-top:14px;background:none;border:1px solid var(--border);border-radius:100px;color:var(--violet2);font-weight:600;font-size:13.5px;padding:9px 18px;cursor:pointer;font-family:inherit;transition:border-color .2s}
+.faq-toggle:hover{border-color:var(--violet2)}
 .support-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px}
 .support-card h3{font-size:16px;margin-bottom:8px}
 .support-card p{color:var(--muted);font-size:14px}
