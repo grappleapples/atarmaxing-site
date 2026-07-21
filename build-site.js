@@ -1,4 +1,4 @@
-// atarmaxing.com generator — builds index/privacy/terms from the app's legal
+// atarly.app generator — builds index/privacy/terms from the app's legal
 // text (../atar-maxing/app/privacy.tsx + terms.tsx) so web and app stay
 // word-for-word identical. Run: node build-site.js  (then commit + push)
 const fs = require('fs');
@@ -26,9 +26,9 @@ function grab(file, re) {
 
 const P = path.join(APP, 'app/privacy.tsx');
 const T = path.join(APP, 'app/terms.tsx');
-const APP_NAME = 'ATAR Maxing', COMPANY = 'ATAR Maxing', ABN = '98 510 784 300';
-const CONTACT_EMAIL = 'support@atarmaxing.com';
-const PRIVACY_URL = 'https://atarmaxing.com/privacy';
+const APP_NAME = 'Atarly', COMPANY = 'Atarly', ABN = '98 510 784 300';
+const CONTACT_EMAIL = 'support@atarly.app';
+const PRIVACY_URL = 'https://atarly.app/privacy';
 const privacyUpdated = grab(P, /LAST_UPDATED = '([^']+)'/);
 const termsUpdated = grab(T, /TERMS_LAST_UPDATED = '([^']+)'/);
 const privacySections = extractArray(P, 'PRIVACY_SECTIONS', { APP_NAME, COMPANY, ABN, CONTACT_EMAIL, PRIVACY_URL });
@@ -63,7 +63,7 @@ const appStoreBadge = (cls = '') => `
 
 const nav = (active) => `
 <nav class="nav">
-  <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> ATAR Maxing</a>
+  <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> Atarly</a>
   <div class="nav-links">
     <a href="./#features"${active === 'home' ? '' : ''}>Features</a>
     <a href="./#support">Support</a>
@@ -77,7 +77,7 @@ const footer = `
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
-      <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> ATAR Maxing</a>
+      <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> Atarly</a>
       <p>The study-life balance app for VCE students. Built in Melbourne by students who get it.</p>
       ${appStoreBadge()}
       <p class="soon">Coming soon to the App Store</p>
@@ -95,8 +95,8 @@ const footer = `
     </div>
     <div class="foot-col">
       <h4>Follow</h4>
-      <a href="https://tiktok.com/@atarmaxing.app" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://instagram.com/atarmaxing.app" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://tiktok.com/@atarly" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://instagram.com/atarly" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
   <p class="foot-copy">© ${new Date().getFullYear()} ${COMPANY}. All rights reserved. Not affiliated with VCAA or VTAC.</p>
@@ -363,7 +363,7 @@ const indexBody = `
   <div class="hero-copy">
     <div class="pill"><span class="dot"></span> Built for VCE · Class of 2026</div>
     <h1>Lock in now.<br><span class="grad">Flex in December.</span></h1>
-    <p class="lead">ATAR Maxing blocks your distracting apps while you study, tracks every SAC toward a live ATAR estimate, and keeps you accountable with your mates — without giving up your life.</p>
+    <p class="lead">Atarly blocks your distracting apps while you study, tracks every SAC toward a live ATAR estimate, and keeps you accountable with your mates — without giving up your life.</p>
     <div class="hero-ctas">${appStoreBadge()}</div>
     <p class="soon">Coming soon to the App Store · free to start</p>
   </div>
@@ -458,7 +458,7 @@ const indexBody = `
       <details><summary>Do breaks stop my study timer?</summary><p>Yes — taking a break pauses the study countdown and starts a separate break timer while your apps unlock. When it runs out, apps re-lock and the study timer picks up exactly where it left off.</p></details>
       <details><summary>What year levels is it for?</summary><p>VCE Year 11 and 12 — including Year 11s doing an accelerated 3/4 subject. Year 11s get their own setup so predictions still make sense.</p></details>
       <details><summary>Is there an Android version?</summary><p>iOS only for now — app blocking is built on Apple's Screen Time, which has no Android equivalent. If enough people ask, an Android version (without blocking) is on the cards.</p></details>
-      <details><summary>How do I cancel Locked In?</summary><p>Subscriptions are managed by Apple: iOS Settings → your name → Subscriptions → ATAR Maxing. Cancelling keeps your access until the end of the period.</p></details>
+      <details><summary>How do I cancel Locked In?</summary><p>Subscriptions are managed by Apple: iOS Settings → your name → Subscriptions → Atarly. Cancelling keeps your access until the end of the period.</p></details>
       <details><summary>Can I delete my account?</summary><p>Anytime, in the app: Settings → Delete account. It permanently removes your account and data from our servers.</p></details>
       </div></div>
       <button class="faq-toggle" onclick="var m=document.getElementById('faqMore');var open=m.classList.toggle('open');this.textContent=open?'See less ↑':'See more ↓';">See more ↓</button>
@@ -480,14 +480,14 @@ ${secs}
 
 /* ── write files ────────────────────────────────────────────────────── */
 fs.writeFileSync(path.join(OUT, 'index.html'),
-  page('ATAR Maxing — lock in now, flex in December', 'The VCE study app: real app blocking during focus sessions, live ATAR estimates from your SACs, and leaderboards with your mates.', indexBody, 'home'));
+  page('Atarly — lock in now, flex in December', 'The VCE study app: real app blocking during focus sessions, live ATAR estimates from your SACs, and leaderboards with your mates.', indexBody, 'home'));
 fs.writeFileSync(path.join(OUT, 'privacy.html'),
-  page('Privacy Policy — ATAR Maxing', 'How ATAR Maxing collects, uses and protects your data.',
+  page('Privacy Policy — Atarly', 'How Atarly collects, uses and protects your data.',
     legalPage('Privacy Policy', privacyUpdated,
       `We built ${APP_NAME} to help VCE students hit their goals. Your privacy matters — here's exactly how we handle your data, in plain English. Governed by the Australian Privacy Act 1988 (Cth).`,
       privacySections), 'privacy'));
 fs.writeFileSync(path.join(OUT, 'terms.html'),
-  page('Terms of Use — ATAR Maxing', 'The terms that govern your use of the ATAR Maxing app.',
+  page('Terms of Use — Atarly', 'The terms that govern your use of the Atarly app.',
     legalPage('Terms of Use', termsUpdated,
       `The rules of using ${APP_NAME} — including subscriptions, referral codes and what our ATAR estimates do (and don't) promise. Our <a href="privacy">Privacy Policy</a> covers how we handle your data.`,
       termsSections), 'terms'));
