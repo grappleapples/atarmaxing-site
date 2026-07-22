@@ -95,8 +95,8 @@ const footer = `
     </div>
     <div class="foot-col">
       <h4>Follow</h4>
-      <a href="https://tiktok.com/@atarly" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://instagram.com/atarly" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://tiktok.com/@atarly.app" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://instagram.com/atarly.app" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
   <p class="foot-copy">© ${new Date().getFullYear()} ${COMPANY}. All rights reserved. Not affiliated with VCAA or VTAC.</p>
