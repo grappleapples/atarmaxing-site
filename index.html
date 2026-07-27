@@ -185,7 +185,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
   <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> Atarly</a>
   <div class="nav-links">
     <a href="./#features">Features</a>
-    <a href="./#waitlist">Waitlist</a>
+    <a href="./#waitlist">Updates</a>
     <a href="./#support">Support</a>
     <a href="privacy">Privacy</a>
     <a href="terms">Terms</a>
@@ -210,7 +210,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
     <form class="wl" id="waitlist" data-source="hero" novalidate>
       <input class="wl-in" type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
       <input class="wl-hp" type="text" name="nickname" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="wl-btn" type="submit">Join the waitlist</button>
+      <button class="wl-btn" type="submit">Keep me posted</button>
       <p class="wl-note">Now live on the App Store · free to start. Leave your email for study tips and big updates — no spam, ever.</p>
       <p class="wl-msg" role="status" aria-live="polite"></p>
     </form>
@@ -349,7 +349,8 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
     <form class="wl" data-source="cta-band" novalidate>
       <input class="wl-in" type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
       <input class="wl-hp" type="text" name="nickname" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="wl-btn" type="submit">Join the waitlist</button>
+      <button class="wl-btn" type="submit">Keep me posted</button>
+      <p class="wl-note">Not signing you up for anything — just study tips and big updates. No spam, ever.</p>
       <p class="wl-msg" role="status" aria-live="polite"></p>
     </form>
     <p class="fine">A$8.99/month or A$64.99/year after the trial · new subscribers only · billed through Apple · <a href="terms">terms apply</a></p>
@@ -428,17 +429,17 @@ document.querySelectorAll('form.wl').forEach(f=>{
     const btn=f.querySelector('.wl-btn'),msg=f.querySelector('.wl-msg'),inp=f.querySelector('.wl-in');
     const email=inp.value.trim();
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)){msg.textContent="That email doesn't look right — double-check it?";msg.className='wl-msg err';return}
-    btn.disabled=true;btn.textContent='Joining…';msg.className='wl-msg';
+    btn.disabled=true;btn.textContent='Adding…';msg.className='wl-msg';
     try{
       const r=await fetch(WL_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,source:f.dataset.source||'website',hp:f.nickname.value})});
       const j=await r.json();
       if(!j.ok)throw 0;
       inp.style.display='none';btn.style.display='none';
       const note=f.querySelector('.wl-note');if(note)note.style.display='none';
-      msg.textContent="You're on the list 🎉 We'll email you the day Atarly drops.";
+      msg.textContent="You're in 🎉 We'll send study tips and the big updates — no spam.";
       msg.className='wl-msg ok';
     }catch{
-      btn.disabled=false;btn.textContent='Join the waitlist';
+      btn.disabled=false;btn.textContent='Keep me posted';
       msg.textContent='Something broke — try again in a sec, or email support@atarly.app';
       msg.className='wl-msg err';
     }
