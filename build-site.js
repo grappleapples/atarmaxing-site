@@ -54,9 +54,9 @@ function bodyHtml(body) {
 const favicon = 'favicon.png';   // arrows-A, exported from the app splash asset
 
 // Official-style App Store badge (inline SVG, no external assets).
-// App isn't live yet → href="#" + .soon caption; swap href when it ships.
+const APP_STORE_URL = 'https://apps.apple.com/app/atarly/id6788921589';
 const appStoreBadge = (cls = '') => `
-<a class="asbadge ${cls}" href="#" aria-label="Download on the App Store (coming soon)">
+<a class="asbadge ${cls}" href="${APP_STORE_URL}" target="_blank" rel="noopener" aria-label="Download Atarly on the App Store">
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
   <span><small>Download on the</small><strong>App Store</strong></span>
 </a>`;
@@ -80,7 +80,7 @@ const footer = `
       <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> Atarly</a>
       <p>The study-life balance app for VCE students. Built in Melbourne by students who get it.</p>
       ${appStoreBadge()}
-      <p class="soon">Coming soon to the App Store</p>
+      <p class="soon">Now live on the App Store</p>
     </div>
     <div class="foot-col">
       <h4>Legal</h4>
@@ -365,7 +365,7 @@ const indexBody = `
     <h1>Lock in now.<br><span class="grad">Flex in December.</span></h1>
     <p class="lead">Atarly blocks your distracting apps while you study, tracks every SAC toward a live ATAR estimate, and keeps you accountable with your mates — without giving up your life.</p>
     <div class="hero-ctas">${appStoreBadge()}</div>
-    <p class="soon">Coming soon to the App Store · free to start</p>
+    <p class="soon">Now live on the App Store · free to start</p>
   </div>
   <div class="f-art">${phoneHome}</div>
 </header>
