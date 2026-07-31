@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Download Atarly</title>
+<meta name="description" content="Get Atarly on the App Store — real app blocking, live ATAR estimates, and leaderboards with your mates.">
+<meta property="og:title" content="Download Atarly">
+<meta property="og:description" content="The VCE study app — free on the App Store.">
+<meta property="og:image" content="https://atarly.app/logo.png">
+<meta property="og:url" content="https://atarly.app/download">
+<meta name="theme-color" content="#08080C">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080C;--card:#15151C;--border:rgba(255,255,255,.08);--text:#F2F2F7;--muted:#9C9CAB;--dim:#66666F;--violet:#8B6CFF;--violet2:#B39CFF}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px}
+.bgfx{position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 45% at 50% -8%,rgba(139,108,255,.22),transparent 70%),radial-gradient(52% 38% at 65% 105%,rgba(139,108,255,.12),transparent 70%)}
+.box{width:100%;max-width:380px;text-align:center}
+.box img{width:64px;height:68px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(139,108,255,.5));margin-bottom:18px}
+h1{font-size:22px;font-weight:800;letter-spacing:-.4px}
+p.sub{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5}
+.spin{width:22px;height:22px;border:2.5px solid rgba(139,108,255,.25);border-top-color:var(--violet);border-radius:50%;margin:22px auto 0;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.btn{display:inline-flex;align-items:center;gap:10px;background:#000;border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:10px 22px 10px 16px;color:#fff;text-decoration:none;margin-top:26px;transition:transform .15s ease,border-color .15s ease}
+.btn:hover{transform:scale(1.03);border-color:rgba(255,255,255,.5)}
+.btn span{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.btn small{font-size:10px;font-weight:400;opacity:.85}
+.btn strong{font-size:17px;font-weight:600;letter-spacing:-.2px}
+.hint{display:none;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:26px;font-size:13px;color:var(--muted);line-height:1.55;text-align:left}
+.hint b{color:var(--text);font-weight:600}
+.hint .dots{display:inline-block;background:rgba(255,255,255,.1);border-radius:6px;padding:0 7px;font-weight:700;color:var(--text)}
+</style>
+<noscript><meta http-equiv="refresh" content="0;url=https://apps.apple.com/app/atarly/id6788921589"></noscript>
+</head>
+<body>
+<div class="bgfx"></div>
+<div class="box">
+  <img src="logo.png" alt="Atarly">
+  <h1>Taking you to the App&nbsp;Store…</h1>
+  <p class="sub">Atarly — free to start.</p>
+  <div class="spin" id="spin"></div>
+  <a class="btn" id="btn" href="https://apps.apple.com/app/atarly/id6788921589">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
+    <span><small>Download on the</small><strong>App Store</strong></span>
+  </a>
+  <div class="hint" id="hint">
+    Stuck in the Instagram browser? Tap <span class="dots">&#8943;</span> in the <b>top right</b>, then choose <b>Open in external browser</b> — the App&nbsp;Store will open straight away.
+  </div>
+</div>
+<script>
+(function(){
+  var STORE = 'https://apps.apple.com/app/atarly/id6788921589';
+  var ua = navigator.userAgent || '';
+  var inApp = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|Messenger|Snapchat|TikTok|musical_ly|Line\/|MicroMessenger/i.test(ua);
+  var iOS = /iPhone|iPad|iPod/i.test(ua);
+  var android = /Android/i.test(ua);
+
+  if (!inApp) { location.replace(STORE); return; }
+
+  var hint = document.getElementById('hint');
+  var btn = document.getElementById('btn');
+
+  if (iOS) {
+    // Escape Instagram's in-app browser: x-safari-https:// hands the URL to
+    // Safari, which then bounces into the App Store. itms-apps:// is the
+    // fallback (opens the App Store app directly) if the first is ignored.
+    btn.href = 'x-safari-' + STORE;
+    location.href = 'x-safari-' + STORE;
+    setTimeout(function(){
+      if (document.hidden || document.visibilityState === 'hidden') return;
+      location.href = 'itms-apps://apps.apple.com/app/atarly/id6788921589';
+    }, 900);
+  } else if (android) {
+    location.href = 'intent://apps.apple.com/app/atarly/id6788921589#Intent;scheme=https;action=android.intent.action.VIEW;end';
+  }
+
+  // If we're still visible after the attempts, show manual instructions.
+  setTimeout(function(){
+    if (document.hidden || document.visibilityState === 'hidden') return;
+    hint.style.display = 'block';
+    document.getElementById('spin').style.display = 'none';
+  }, 2200);
+})();
+</script>
+</body>
+</html>

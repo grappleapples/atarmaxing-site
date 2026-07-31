@@ -131,22 +131,6 @@ details summary::after{content:'+';color:var(--violet2);font-size:18px;font-weig
 details[open] summary::after{content:'–'}
 details p{color:var(--muted);font-size:13.5px;margin-top:10px}
 
-/* waitlist */
-.wl{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;max-width:460px;position:relative}
-.wl-in{flex:1;min-width:210px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:13px 20px;color:var(--text);font-size:14.5px;font-family:inherit;outline:none;transition:border-color .2s}
-.wl-in:focus{border-color:var(--violet)}
-.wl-in::placeholder{color:var(--dim)}
-.wl-btn{background:linear-gradient(92deg,var(--violet),#6F4DE0);border:none;border-radius:999px;padding:13px 22px;color:#fff;font-weight:700;font-size:14.5px;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 0 24px rgba(139,108,255,.35)}
-.wl-btn:hover{transform:scale(1.03)}
-.wl-btn:disabled{opacity:.6;cursor:default;transform:none}
-.wl-note{flex-basis:100%;font-size:11.5px;color:var(--dim)}
-.wl-msg{flex-basis:100%;font-size:13.5px;display:none;font-weight:600}
-.wl-msg.ok{display:block;color:var(--green)}
-.wl-msg.err{display:block;color:#FF8A8A}
-.wl-hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none}
-.cta-band .wl{margin:18px auto 0;justify-content:center}
-@media(max-width:820px){.hero .wl{justify-content:center;margin-left:auto;margin-right:auto}}
-
 /* footer */
 footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
@@ -185,7 +169,6 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
   <a class="brand" href="./"><img class="brand-logo" src="logo.png" alt=""> Atarly</a>
   <div class="nav-links">
     <a href="./#features">Features</a>
-    <a href="./#waitlist">Updates</a>
     <a href="./#support">Support</a>
     <a href="privacy">Privacy</a>
     <a href="terms">Terms</a>
@@ -207,13 +190,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
   <span><small>Download on the</small><strong>App Store</strong></span>
 </a></div>
-    <form class="wl" id="waitlist" data-source="hero" novalidate>
-      <input class="wl-in" type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
-      <input class="wl-hp" type="text" name="nickname" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="wl-btn" type="submit">Keep me posted</button>
-      <p class="wl-note">Now live on the App Store · free to start. Leave your email for study tips and big updates — no spam, ever.</p>
-      <p class="wl-msg" role="status" aria-live="polite"></p>
-    </form>
+    <p class="soon">Now live on the App Store · free to start</p>
   </div>
   <div class="f-art">
 <div class="phone hero-phone"><div class="screen">
@@ -346,13 +323,6 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
   <span><small>Download on the</small><strong>App Store</strong></span>
 </a>
-    <form class="wl" data-source="cta-band" novalidate>
-      <input class="wl-in" type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
-      <input class="wl-hp" type="text" name="nickname" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button class="wl-btn" type="submit">Keep me posted</button>
-      <p class="wl-note">Not signing you up for anything — just study tips and big updates. No spam, ever.</p>
-      <p class="wl-msg" role="status" aria-live="polite"></p>
-    </form>
     <p class="fine">A$8.99/month or A$64.99/year after the trial · new subscribers only · billed through Apple · <a href="terms">terms apply</a></p>
   </div>
 </section>
@@ -395,7 +365,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.89 1.45-.06 1.99-.93 3.74-.93 1.75 0 2.24.93 3.77.9 1.56-.03 2.54-1.41 3.49-2.8 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.06-4.6zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.22-1.22 3.53 1.29.1 2.6-.65 3.41-1.61z"/></svg>
   <span><small>Download on the</small><strong>App Store</strong></span>
 </a>
-      <p class="soon">Now live on the App Store · free to start</p>
+      <p class="soon">Now live on the App Store</p>
     </div>
     <div class="foot-col">
       <h4>Legal</h4>
@@ -421,30 +391,11 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:52px 0 40px}
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-
-const WL_URL='https://ppdhhbrsdtibfxjkmmoa.supabase.co/functions/v1/join-waitlist';
-document.querySelectorAll('form.wl').forEach(f=>{
-  f.addEventListener('submit',async e=>{
-    e.preventDefault();
-    const btn=f.querySelector('.wl-btn'),msg=f.querySelector('.wl-msg'),inp=f.querySelector('.wl-in');
-    const email=inp.value.trim();
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)){msg.textContent="That email doesn't look right — double-check it?";msg.className='wl-msg err';return}
-    btn.disabled=true;btn.textContent='Adding…';msg.className='wl-msg';
-    try{
-      const r=await fetch(WL_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,source:f.dataset.source||'website',hp:f.nickname.value})});
-      const j=await r.json();
-      if(!j.ok)throw 0;
-      inp.style.display='none';btn.style.display='none';
-      const note=f.querySelector('.wl-note');if(note)note.style.display='none';
-      msg.textContent="You're in 🎉 We'll send study tips and the big updates — no spam.";
-      msg.className='wl-msg ok';
-    }catch{
-      btn.disabled=false;btn.textContent='Keep me posted';
-      msg.textContent='Something broke — try again in a sec, or email support@atarly.app';
-      msg.className='wl-msg err';
-    }
-  });
-});
+// Instagram/Facebook in-app browsers dead-end on apps.apple.com links, so
+// reroute the App Store badges through the /download escape page there.
+if(/Instagram|FBAN|FBAV|FB_IAB|FBIOS|Messenger|Snapchat|TikTok|musical_ly|Line\/|MicroMessenger/i.test(navigator.userAgent)){
+  document.querySelectorAll('.asbadge').forEach(a=>{a.href='download';a.removeAttribute('target')});
+}
 </script>
 </body>
 </html>

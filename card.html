@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#08080C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Atarly</title>
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080C;--card:#15151C;--border:rgba(255,255,255,.08);--text:#F2F2F7;--muted:#9C9CAB;--dim:#66666F;--violet:#8B6CFF;--violet2:#B39CFF;--blue:#5AA8FF;--green:#2DD4A0;--gold:#FFB84D}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100dvh;display:flex;flex-direction:column}
+.bgfx{position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 45% at 50% -8%,rgba(139,108,255,.22),transparent 70%),radial-gradient(45% 32% at 92% 24%,rgba(90,168,255,.10),transparent 65%),radial-gradient(52% 38% at 65% 105%,rgba(139,108,255,.12),transparent 70%)}
+.wrap{width:100%;max-width:430px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 22px calc(20px + env(safe-area-inset-bottom));flex:1;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;padding:10px 0 4px}
+.brand{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:16px;letter-spacing:-.3px}
+.brand img{width:24px;height:26px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(139,108,255,.5))}
+.streak{display:inline-flex;align-items:center;gap:5px;background:rgba(255,184,77,.13);border:1px solid rgba(255,184,77,.35);color:var(--gold);font-size:11px;font-weight:700;border-radius:999px;padding:4px 11px}
+.kicker{font-size:10.5px;letter-spacing:2.6px;font-weight:700;color:var(--violet2);text-transform:uppercase;text-align:center;margin-top:26px}
+.hero{position:relative;margin:14px 6px 8px;padding:30px 10px 34px;text-align:center}
+.hero::before,.hero::after{content:'';position:absolute;width:86px;height:86px;border:3px solid var(--violet);opacity:.9}
+.hero::before{top:0;left:0;border-right:0;border-bottom:0;border-radius:6px 0 0 0}
+.hero::after{bottom:0;right:0;border-left:0;border-top:0;border-radius:0 0 6px 0}
+.hero .lbl{font-size:14px;color:var(--muted);font-weight:500}
+.hero .num{font-size:96px;font-weight:900;letter-spacing:-4px;line-height:1.05;background:linear-gradient(92deg,#B39CFF 0%,#8B6CFF 45%,#5AA8FF 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 34px rgba(139,108,255,.35))}
+.hero .sub{font-size:12px;color:var(--dim);margin-top:6px}
+.hero .sub b{color:var(--green);font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-top:14px}
+.card .h{font-size:9px;letter-spacing:1.4px;color:var(--dim);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.row:last-child{border-bottom:0}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.row .nm{font-size:13.5px;font-weight:600;flex:1}
+.row .sc{font-size:14px;font-weight:800;letter-spacing:-.3px}
+.bar{height:6px;border-radius:4px;background:rgba(255,255,255,.07);margin:-2px 0 8px 18px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:4px}
+.foot{margin-top:auto;text-align:center;padding-top:22px}
+.foot .cta{font-size:13.5px;color:var(--muted)}
+.foot .cta b{color:var(--text)}
+.foot .url{display:inline-block;margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.2px;background:linear-gradient(92deg,#B39CFF,#5AA8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{font-size:10px;color:var(--dim);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="bgfx"></div>
+<div class="wrap">
+  <div class="top">
+    <span class="brand"><img src="logo.png" alt=""> Atarly</span>
+    <span class="streak">🔥 class of 2025</span>
+  </div>
+
+  <div class="kicker">Final ATAR · Co-founder</div>
+  <div class="hero">
+    <div class="lbl">Marcus's ATAR</div>
+    <div class="num">94.45</div>
+    <div class="sub">received 09 Dec 2025 · <b>real result</b></div>
+  </div>
+
+  <div class="card">
+    <div class="h">Scaled study scores</div>
+    <div class="row"><span class="dot" style="background:var(--blue)"></span><span class="nm">English</span><span class="sc">36.86</span></div>
+    <div class="bar"><i style="width:74%;background:var(--blue)"></i></div>
+    <div class="row"><span class="dot" style="background:var(--violet)"></span><span class="nm">Maths: Methods</span><span class="sc">41.96</span></div>
+    <div class="bar"><i style="width:84%;background:var(--violet)"></i></div>
+    <div class="row"><span class="dot" style="background:var(--green)"></span><span class="nm">Maths: General</span><span class="sc">41.66</span></div>
+    <div class="bar"><i style="width:83%;background:var(--green)"></i></div>
+  </div>
+
+  <div class="foot">
+    <p class="cta"><b>This number started as a prediction.</b><br>See what yours could be.</p>
+    <span class="url">atarly.app</span>
+    <p class="tag">Built during VCE, for VCE. Not affiliated with VCAA or VTAC.</p>
+  </div>
+</div>
+</body>
+</html>

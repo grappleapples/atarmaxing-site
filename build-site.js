@@ -259,6 +259,11 @@ const REVEAL_JS = `
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// Instagram/Facebook in-app browsers dead-end on apps.apple.com links, so
+// reroute the App Store badges through the /download escape page there.
+if(/Instagram|FBAN|FBAV|FB_IAB|FBIOS|Messenger|Snapchat|TikTok|musical_ly|Line\\/|MicroMessenger/i.test(navigator.userAgent)){
+  document.querySelectorAll('.asbadge').forEach(a=>{a.href='download';a.removeAttribute('target')});
+}
 </script>`;
 
 function page(title, desc, body, active) {
